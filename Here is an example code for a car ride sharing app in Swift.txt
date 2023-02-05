@@ -1,0 +1,66 @@
+import UIKit
+
+class ViewController: UIViewController {
+
+    // Outlets
+    @IBOutlet weak var sourceLocationTextField: UITextField!
+    @IBOutlet weak var destinationLocationTextField: UITextField!
+    @IBOutlet weak var requestRideButton: UIButton!
+    
+    // Actions
+    @IBAction func requestRideButtonTapped(_ sender: Any) {
+        // Validate source and destination locations
+        guard let source = sourceLocationTextField.text, !source.isEmpty,
+            let destination = destinationLocationTextField.text, !destination.isEmpty else {
+                // Show error message if source or destination is empty
+                showAlert(with: "Error", message: "Please enter both source and destination locations.")
+                return
+        }
+        
+        // Request ride
+        let rideRequest = RideRequest(source: source, destination: destination)
+        NetworkManager.requestRide(rideRequest) { [weak self] result in
+            switch result {
+            case .success(let ride):
+                // Show success message with ride details
+                self?.showAlert(with: "Ride Requested", message: "Your ride has been requested with ID: \(ride.id)")
+            case .failure(let error):
+                // Show error message
+                self?.showAlert(with: "Error", message: error.localizedDescription)
+            }
+        }
+    }
+    
+    // Show alert
+    private func showAlert(with title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+}
+
+struct RideRequest {
+    let source: String
+    let destination: String
+}
+
+struct Ride {
+    let id: String
+}
+
+enum NetworkError: Error {
+    case invalidURL
+    case invalidResponse
+}
+
+class NetworkManager {
+    static func requestRide(_ rideRequest: RideRequest, completion: @escaping (Result<Ride, NetworkError>) -> Void) {
+        // Make network call to request ride
+        // ...
+        
+        // In this example, return a dummy ride with a random ID
+        let ride = Ride(id: String(Int.random(in: 1...1000)))
+        completion(.success(ride))
+    }
+}

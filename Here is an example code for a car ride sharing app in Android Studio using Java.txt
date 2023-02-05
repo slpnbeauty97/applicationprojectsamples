@@ -1,0 +1,73 @@
+public class MainActivity extends AppCompatActivity {
+
+    private EditText mSourceLocationEditText;
+    private EditText mDestinationLocationEditText;
+    private Button mRequestRideButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        mSourceLocationEditText = findViewById(R.id.source_location_edit_text);
+        mDestinationLocationEditText = findViewById(R.id.destination_location_edit_text);
+        mRequestRideButton = findViewById(R.id.request_ride_button);
+
+        mRequestRideButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String source = mSourceLocationEditText.getText().toString();
+                String destination = mDestinationLocationEditText.getText().toString();
+
+                if (source.isEmpty() || destination.isEmpty()) {
+                    showErrorMessage("Please enter both source and destination locations.");
+                    return;
+                }
+
+                RideRequest rideRequest = new RideRequest(source, destination);
+                requestRide(rideRequest);
+            }
+        });
+    }
+
+    private void requestRide(RideRequest rideRequest) {
+        // Make network call to request ride
+        // ...
+
+        // In this example, return a dummy ride with a random ID
+        Random random = new Random();
+        int rideId = random.nextInt(1000) + 1;
+        Ride ride = new Ride(rideId);
+        showSuccessMessage("Your ride has been requested with ID: " + ride.getId());
+    }
+
+    private void showSuccessMessage(String message) {
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+    }
+
+    private void showErrorMessage(String message) {
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+    }
+}
+
+class RideRequest {
+    private String source;
+    private String destination;
+
+    public RideRequest(String source, String destination) {
+        this.source = source;
+        this.destination = destination;
+    }
+}
+
+class Ride {
+    private int id;
+
+    public Ride(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+}

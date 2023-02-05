@@ -1,0 +1,58 @@
+/* Define a font for the entire app */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Style the header */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+/* Style the play/pause button */
+.play-pause-button {
+    background-color: #fff;
+    border: none;
+    color: #333;
+    font-size: 24px;
+    padding: 10px;
+}
+
+/* Style the song title */
+.song-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Style the progress bar */
+.progress-bar {
+    background-color: #ddd;
+    height: 10px;
+    margin-top: 20px;
+}
+
+/* Style the current progress */
+.current-progress {
+    background-color: #333;
+    height: 10px;
+}
+
+/* Style the song list */
+.song-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Style each song in the list */
+.song-list li {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+
+/* Style the currently playing song */
+.song-list .playing {
+    background-color: #f0f0f0;
+}
